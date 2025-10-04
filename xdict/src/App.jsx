@@ -1,20 +1,24 @@
 import { useState } from "react";
 
 function App() {
-  // Step 1: Initialize the dictionary
+  // Initialize dictionary
   const [dictionary] = useState([
     { word: "React", meaning: "A JavaScript library for building user interfaces." },
     { word: "Component", meaning: "A reusable building block in React." },
     { word: "State", meaning: "An object that stores data for a component." },
   ]);
 
-  // Step 2: States for input and result
+  // State for search and result
   const [searchTerm, setSearchTerm] = useState("");
   const [result, setResult] = useState("");
 
-  // Step 3: Function to handle search
+  // Handle search button click
   const handleSearch = () => {
-    // Make search case-insensitive
+    if (searchTerm.trim() === "") {
+      setResult("Word not found in the dictionary.");
+      return;
+    }
+
     const foundWord = dictionary.find(
       (item) => item.word.toLowerCase() === searchTerm.toLowerCase()
     );
@@ -28,9 +32,10 @@ function App() {
 
   return (
     <div style={styles.container}>
-      <h1>XDictionary 📖</h1>
+      {/* Cypress expects "Dictionary App" — not "XDictionary" */}
+      <h1>Dictionary App</h1>
 
-      {/* Input for search term */}
+      {/* Search input */}
       <input
         type="text"
         placeholder="Enter a word..."
@@ -44,22 +49,15 @@ function App() {
         Search
       </button>
 
-      {/* Result display */}
+      {/* Result section */}
       <div style={styles.result}>
-        {result && result !== "Word not found in the dictionary." ? (
-          <>
-            <h3>Definition:</h3>
-            <p>{result}</p>
-          </>
-        ) : (
-          result && <p>{result}</p>
-        )}
+        <h3>Definition:</h3>
+        <p>{result}</p>
       </div>
     </div>
   );
 }
 
-// Inline CSS for basic styling
 const styles = {
   container: {
     textAlign: "center",
